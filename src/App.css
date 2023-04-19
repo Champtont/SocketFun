@@ -22,15 +22,21 @@
   display: flex;
   flex-direction: column;
 }
-.myChatBubble {
+.list-group-item + .myChatBubble {
   background-color: var(--murtleGreen);
   align-self: self-end;
   color: white;
+  border-radius: 5px;
+  box-shadow: black 5px 5px 10px;
+  margin-bottom: 5px;
 }
-.otherChatBubble {
+.list-group-item + .otherChatBubble {
   background-color: var(--oliveVine);
+  border-radius: 5px;
+  box-shadow: black -5px 5px 10px;
   align-self: self-start;
   color: black;
+  margin-bottom: 5px;
 }
 .rightSide {
   color: white;
