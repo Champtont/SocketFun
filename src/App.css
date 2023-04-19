@@ -1,0 +1,55 @@
+:root {
+  --spaceCadet: #222e50;
+  --murtleGreen: #426b69;
+  --oliveVine: #8bb174;
+  --lightOliveVine: #b5ca8d;
+  --darkSlateGray: #2a4849;
+}
+
+.App {
+  text-align: center;
+  background-color: var(--spaceCadet);
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chatStuff .form-control:focus {
+  box-shadow: var(--oliveVine) 0 0 10px 3px;
+}
+.chat {
+  display: flex;
+  flex-direction: column;
+}
+.myChatBubble {
+  background-color: var(--murtleGreen);
+  align-self: self-end;
+  color: white;
+}
+.otherChatBubble {
+  background-color: var(--oliveVine);
+  align-self: self-start;
+  color: black;
+}
+.rightSide {
+  color: white;
+}
+.rightTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--darkSlateGray);
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  box-shadow: gray 5px 5px 10px;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
