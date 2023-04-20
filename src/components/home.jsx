@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRef } from "react";
 import {
   Container,
   Row,
@@ -18,13 +19,17 @@ const Home = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
 
+  const stateRef = useRef();
+
+  stateRef.current = onlineUsers;
+
   useEffect(() => {
     socket.on("welcome", (welcomeMessage) => {
       console.log(welcomeMessage);
 
-      socket.on("loggedIn", (onlineUsersList) => {
-        console.log(onlineUsersList);
-        setOnlineUsers(onlineUsersList);
+      socket.on("loggedIn", (onlineUsers) => {
+        console.log("Online peeps are:" + stateRef.current);
+        setOnlineUsers(onlineUsers);
         setLoggedIn(true);
       });
 
@@ -35,9 +40,16 @@ const Home = () => {
       socket.on("newMessage", (newMessage) => {
         console.log(newMessage);
         setChatHistory((chatHistory) => [...chatHistory, newMessage.message]);
+        scrollToBottom();
       });
     });
   }, []);
+
+  const scrollToBottom = () => {
+    const invisiBottom = document.getElementById("bottomLine");
+    const chatBox = document.getElementsByClassName("chat");
+    invisiBottom.scrollIntoView({ behavior: "smooth" });
+  };
 
   const submitUsername = () => {
     socket.emit("setUsername", { name });
@@ -51,6 +63,8 @@ const Home = () => {
     };
     socket.emit("sendMessage", { message: newMessage });
     setChatHistory([...chatHistory, newMessage]);
+    setMessage("");
+    scrollToBottom();
   };
 
   return (
@@ -61,6 +75,7 @@ const Home = () => {
             onSubmit={(e) => {
               e.preventDefault();
               submitUsername();
+              console.log(name);
             }}
           >
             <FormControl
@@ -70,23 +85,34 @@ const Home = () => {
               disabled={loggedIn}
             />
           </Form>
-          <ListGroup className="chat">
+          <div className="chat">
             {chatHistory.map((message, index) => (
-              <ListGroup.Item
+              <div
                 key={index}
                 className={
-                  message.sender === name ? "myChatBubble" : "otherChatBubble"
+                  message.sender === name
+                    ? "myChatBubble singleMessage"
+                    : "otherChatBubble singleMessage"
                 }
               >
-                {<strong>{message.sender} </strong>} | {message.text} at{" "}
-                {message.createdAt}
-              </ListGroup.Item>
+                <div className="messageTop">
+                  <div>{<strong>{message.sender}:</strong>}</div>
+                  <div>{message.text}</div>
+                </div>
+                <div className="messageBottom">at {message.createdAt}</div>
+              </div>
             ))}
-          </ListGroup>
+            <div id="bottomLine"></div>
+          </div>
           <Form
             onSubmit={(e) => {
               e.preventDefault();
-              sendMessage();
+              if (message === "") {
+                alert("Please write something first");
+                return;
+              } else {
+                sendMessage();
+              }
             }}
           >
             <FormControl

@@ -21,22 +21,54 @@
 .chat {
   display: flex;
   flex-direction: column;
+  max-height: 620px;
+  padding: 1em;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
-.list-group-item + .myChatBubble {
+.chat::-webkit-scrollbar {
+  width: 4px;
+  background-color: transparent;
+}
+.chat::-webkit-scrollbar-thumb {
+  background-color: var(--lightOliveVine);
+  box-shadow: inset black 1px 1px 2px;
+  border-radius: 1px;
+}
+.singleMessage {
+  display: flex;
+  flex-direction: column;
+}
+.messageTop {
+  display: flex;
+  gap: 10px;
+  font-size: 14pt;
+}
+.messageBottom {
+  color: rgba(255, 255, 255, 0.644);
+}
+.myChatBubble {
   background-color: var(--murtleGreen);
+  width: 45%;
   align-self: self-end;
   color: white;
   border-radius: 5px;
   box-shadow: black 5px 5px 10px;
   margin-bottom: 5px;
+  padding: 0.5em 1em;
 }
-.list-group-item + .otherChatBubble {
+.otherChatBubble {
   background-color: var(--oliveVine);
+  width: 45%;
   border-radius: 5px;
   box-shadow: black -5px 5px 10px;
   align-self: self-start;
   color: black;
   margin-bottom: 5px;
+  padding: 0.5em 1em;
+}
+#bottomLine {
+  margin-bottom: 4em;
 }
 .rightSide {
   color: white;
